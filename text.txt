@@ -1,0 +1,41 @@
+Affected 
+
+How it works? 
+Affected, parallel and incremental cache 
+
+Does not matter how big the repos are. What matters is how big is the change you make 
+
+Looks for recent changes that were made. 
+
+Parallel flag let’s you build in a distributed fashion 
+
+Slowest build out of all ends up being your total CI time 
+
+Incrementality: no redo from scratch 
+
+
+
+
+
+When developing locally, your builds are fast because your cache is stored in your machine. 
+
+
+
+Nx is smart enough to know if it has computed before 
+
+Initially building: nx build my-app
+Second time without changing: instant 
+Even if you delete the delete the dist folder 
+Remember that cache is local, rm -rf node_modules/.cache then will be back to the initial run time 
+
+
+What if you wanted to share the cache that you have from your machine to your coworker’s? Nx cloud 
+
+With nx affected and Nx cloud, your builds will be a lot faster, but it’s still local 
+
+
+
+Nx cloud 
+
+npm install with cache from the nx account 
+If someone else checks out your branch then it will be less than 20 seconds initially 
