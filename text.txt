@@ -1,41 +1,48 @@
-Affected 
+How does nx cache work? 
 
-How it works? 
-Affected, parallel and incremental cache 
-
-Does not matter how big the repos are. What matters is how big is the change you make 
-
-Looks for recent changes that were made. 
-
-Parallel flag let’s you build in a distributed fashion 
-
-Slowest build out of all ends up being your total CI time 
-
-Incrementality: no redo from scratch 
+After configuring cache in nx.json, Nx is able to use local computational cache, so it is smart enough to know if you have run a task before. (Build/test/lint). 
+As a result, while developing locally, your builds are fast because your cache is stored in your personal machine after running the task initially. 
+All the output is cached and then replayed during a cache hit and that’s configurable in project.json. File output and console output (?) 
 
 
+Example 
 
-
-
-When developing locally, your builds are fast because your cache is stored in your machine. 
-
-
-
-Nx is smart enough to know if it has computed before 
-
+Set up cache: Nx.json: cacheOperations 
 Initially building: nx build my-app
 Second time without changing: instant 
-Even if you delete the delete the dist folder 
+Even if you delete the delete the dist folder because the cache is stored elsewhere(?) 
 Remember that cache is local, rm -rf node_modules/.cache then will be back to the initial run time 
 
 
-What if you wanted to share the cache that you have from your machine to your coworker’s? Nx cloud 
+Cons 
 
-With nx affected and Nx cloud, your builds will be a lot faster, but it’s still local 
+Nx test app1: you are telling Nx to run the app1:test task plus all the tasks it depends on (?) 
+nx run-many --target=test --projects=app1,lib, you are telling Nx to do the same for two tasks app1:test and lib:test
+
+
+NX Affected 
+
+nx affected --target=test is smart enough to figure out which apps will be affected by looking at the files that were changed in PR 
+Custom targets for projects 
+Run tasks for all the projects affected by the last commit on your branch 
+Parallel flag let’s you build in a distributed fashion 
+Target hash from last commit 
+
+
+https://nx.dev/nx/affected#affected
+
+
+
+Locally, cache makes running tasks a lot faster. What if you wanted to share the cache that you have from your machine to your coworker’s? 
+
+Nx cloud 
+
+
+
+With nx affected, your builds will be a lot faster and efficient, but it’s still local so you’ll need to share this cache. 
 
 
 
 Nx cloud 
 
-npm install with cache from the nx account 
-If someone else checks out your branch then it will be less than 20 seconds initially 
+If someone else checks out your branch then it will be less than 20 seconds initially (?) 
